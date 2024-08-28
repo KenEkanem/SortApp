@@ -2,7 +2,7 @@ from csv_processor import load_guest_data
 from qr_code_generator import generate_qr_code
 from access_card_creator import create_access_card
 from email_sender import send_email_with_attachment
-from sheets_updater import update_barcode_in_sheet 
+from sheets_updater import update_barcode_in_sheet
 import os
 from dotenv import load_dotenv
 
@@ -45,7 +45,7 @@ def main():
         qr_code_url = generate_qr_code(guest_id, guest_email, base_url, qr_code_file)
 
         # Step 2: Post the QR code URL to the barcode section of the Google Sheets
-        update_barcode_in_sheet(guest_email, qr_code_url)
+        update_barcode_in_sheet(guest_email, guest_id, qr_code_url)
 
         # Step 3: Create the access card with the guest's details
         create_access_card(template_file, guest_name, guest_id, qr_code_file, access_card_file)
