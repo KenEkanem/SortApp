@@ -1,7 +1,7 @@
 from PIL import Image, ImageDraw, ImageFont
 import os
 
-def create_access_card(template_file, guest_name, guest_id, qr_code_file, output_file):
+def create_access_card(template_file, guest_name, guest_id, qr_code_file, color_name, output_file):
     try:
         # Check if files exist
         if not os.path.exists(template_file):
@@ -48,6 +48,24 @@ def create_access_card(template_file, guest_name, guest_id, qr_code_file, output
             qr_top_left[0] + (qr_width - qr_size) // 2,
             qr_top_left[1] + (qr_height - qr_size) // 2
         )
+
+        # Define color mappings
+        color_mapping = {
+            "Red": (255, 0, 0),
+            "Orange": (255, 165, 0),
+            "Green": (0, 128, 0)
+        }
+
+        # Get the color from the color name
+        color_code = color_mapping.get(color_name, (0, 0, 0))  # Default to black if not found
+
+        # Define the color code box area on the template
+        color_box_top_left = (646, 1329)
+        color_box_bottom_right = (866, 1392)
+
+        # Draw a filled rectangle with the color
+        print(f"Filling color: '{color_name}' ({color_code}) in box from {color_box_top_left} to {color_box_bottom_right}")
+        draw.rectangle([color_box_top_left, color_box_bottom_right], fill=color_code)
 
         # Draw text on the image
         print(f"Drawing Name: '{guest_name}' at {name_position}")
