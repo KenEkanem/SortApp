@@ -5,3 +5,4 @@ guest_access_card_generator/*
 qr_codes/*
 src/__pycache__/
 token.pickle
+.env
