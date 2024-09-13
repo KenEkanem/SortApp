@@ -1,7 +1,7 @@
 import requests
 
 # URL for Google Apps Script
-GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyIXQiGpZAFBrCd6_16jJlK5HIgtTiPBjzQwudNVomtH3_RvVtcbQ_tdNnjNJdkrdsYRQ/exec"
+GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyXPyQZhB6IcqVqDj-FfJ3OIrVqntQffPiu0xMaihvoaNRxqT66-Re-TCr5LwEW7XZOqQ/exec"
 
 def update_barcode_in_sheet(email, unique_id, barcode_url):
     # Define the parameters for the POST request
