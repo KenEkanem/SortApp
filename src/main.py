@@ -8,6 +8,7 @@ from email_sender import send_email_with_drive_link
 from email_content import create_email_content
 from email_sender import upload_file_to_drive
 from email_sender import authenticate_with_google
+import pandas as pd
 
 load_dotenv()
 
@@ -18,11 +19,18 @@ def ensure_directory_exists(directory):
 
 def process_guest(guest, qr_code_dir, access_card_dir, template_file, base_url, drive_service):
     """Process each guest by generating QR code, updating Google Sheets, creating an access card, and sending an email."""
-    guest_name = guest['name']
-    guest_id = str(guest['unique_id'])
-    guest_email = guest['email']
-    color_name = guest['xn']
+    
+    # Ensure guest_name, guest_id, and guest_email are valid strings and not empty
+    guest_name = str(guest['name']).strip() if not pd.isna(guest['name']) else 'Guest'
+    guest_id = str(guest['unique_id']).strip() if not pd.isna(guest['unique_id']) else 'unknown'
+    guest_email = str(guest['email']).strip() if not pd.isna(guest['email']) else None
+    color_name = guest.get('xn', 'default')
 
+    if not guest_email:
+        print(f"Skipping guest with missing email: {guest}")
+        return
+
+    # Define paths for saving the QR code and access card
     qr_code_file = os.path.join(qr_code_dir, f"qr_{guest_id}.png")
     access_card_file = os.path.join(access_card_dir, f"{guest_name.replace(' ', '_')}_access_card.png")
 
