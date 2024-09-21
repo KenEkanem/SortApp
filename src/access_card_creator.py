@@ -1,6 +1,15 @@
 from PIL import Image, ImageDraw, ImageFont
 import os
 
+def split_name(guest_name, max_words=3):
+    words = guest_name.split()
+    if len(words) > max_words:
+        first_line = " ".join(words[:max_words])
+        second_line = " ".join(words[max_words:])
+        return first_line, second_line
+    else:
+        return guest_name, ""
+
 def create_access_card(template_file, guest_name, guest_id, qr_code_file, color_name, output_file):
     try:
         # Check if files exist
@@ -26,7 +35,11 @@ def create_access_card(template_file, guest_name, guest_id, qr_code_file, color_
 
         # Define positions for name and ID
         name_position = (365, 1520)
+        second_line_position = (365, 1565)
         id_position = (363, 1670)
+
+        # Split the guest name into two lines
+        first_line, second_line = split_name(guest_name)
 
         # Load the QR code image
         qr_img = Image.open(qr_code_file)
@@ -53,7 +66,8 @@ def create_access_card(template_file, guest_name, guest_id, qr_code_file, color_
         color_mapping = {
             "Red": (255, 0, 0),
             "Orange": (255, 165, 0),
-            "Green": (0, 128, 0)
+            "Green": (0, 128, 0),
+            "Blue": (51, 78, 172) 
         }
 
         # Get the color from the color name
@@ -68,9 +82,14 @@ def create_access_card(template_file, guest_name, guest_id, qr_code_file, color_
         draw.rectangle([color_box_top_left, color_box_bottom_right], fill=color_code)
 
         # Draw text on the image
-        print(f"Drawing Name: '{guest_name}' at {name_position}")
+        print(f"Drawing Name: '{first_line}' at {name_position}")
+        draw.text(name_position, first_line, font=font, fill="black")
+        
+        if second_line:
+            print(f"Drawing Second Line: '{second_line}' at {second_line_position}")
+            draw.text(second_line_position, second_line, font=font, fill="black")
+        
         print(f"Drawing ID: '{guest_id}' at {id_position}")
-        draw.text(name_position, guest_name, font=font, fill="black")
         draw.text(id_position, guest_id, font=font, fill="black")
 
         # Paste the QR code onto the template
@@ -82,3 +101,4 @@ def create_access_card(template_file, guest_name, guest_id, qr_code_file, color_
         
     except Exception as e:
         print(f"Error creating access card: {e}")
+
