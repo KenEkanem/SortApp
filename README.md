@@ -5,12 +5,22 @@ This application processes guest data from a CSV file, generates personalized ac
 
 ## Setup
 
+### Prerequsites
+Create a virtual env & Activate it
+
+For Linux
+source venv/bin/activate
+
+For Windows
+Scripts ./venv/bin/activate
+
+
 1. Install the required Python packages:
     ```bash
-    pip install pandas qrcode[pil] pillow smtplib
+    pip install -r requirements.txt
     ```
 
-2. Update the `config.py` file with your SMTP server details and other configuration settings.
+2. Update the `.env` file with your SMTP server details and other configuration settings.
 
 3. Place your guest data CSV file in the `data/` directory.
 
