@@ -3,3 +3,6 @@ data/
 guest_access_card_generator/
 qr_codes/
 src/__pycache__/
+.env
+.venv
+

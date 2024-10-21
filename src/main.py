@@ -13,7 +13,7 @@ def main():
     template_file = '../templates/access_card_template.png'
     qr_code_dir = '../qr_codes/'
     access_card_dir = '../access_cards/'
-    base_url = 'http://127.0.0.1:5003/checkin-by-barcode'
+    base_url = 'http://127.0.0.1:5003/checkin-by-barcode' #update with deployment baseurl
 
     # Retrieve SMTP details from environment variables
     smtp_server = os.getenv('SMTP_SERVER')
