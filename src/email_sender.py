@@ -14,11 +14,11 @@ from email_content import create_email_content  # Ensure this imports the correc
 # Load environment variables from .env file
 load_dotenv()
 
-# SMTP configuration
-SMTP_SERVER = "smtp.useplunk.com"
-SMTP_PORT = 465  # or 587 for TLS
-SMTP_USER = "plunk"
-SMTP_PASSWORD = "sk_f187f173d6a2940d4e24098e47b0cc2c7c03b6d714e3a6aa"
+# Load SMTP configuration from environment variables
+SMTP_SERVER = os.getenv('SMTP_SERVER')
+SMTP_PORT = int(os.getenv('SMTP_PORT', '465').strip())
+SMTP_USER = os.getenv('SMTP_USER')
+SMTP_PASSWORD = os.getenv('SMTP_PASSWORD')
 
 def authenticate_with_google(api_name, api_version, scopes):
     """Authenticate with Google and return a service object."""
@@ -71,7 +71,6 @@ def upload_file_to_drive(service, file_path):
         return None
 
 def send_email_with_drive_link(to_email, guest_name, drive_link):
-   
     """Send an email to the guest with the Google Drive link."""
     # Generate the email subject and body using the imported function
     subject, body = create_email_content(guest_name, drive_link)
@@ -100,9 +99,3 @@ def send_email_with_drive_link(to_email, guest_name, drive_link):
         print(f"SMTP error occurred: {e}")
     except Exception as e:
         print(f"Failed to send email: {e}")
-
-# if __name__ == "__main__":
-#     recipient_email = "kennedyekanem@gmail.com"  # Set the email address directly
-#     guest_name = "Kennedy Ekanem"
-#     drive_link = "https://drive.google.com/uc?id=1EJK1BzgRJMXoSa09pEt1im7QD5SPJVJN"  # Replace with actual link
-#     send_email_with_drive_link(recipient_email, guest_name, drive_link)
